@@ -1,7 +1,11 @@
 // ===========================================
 // Adaptive Task Manager
 // UI Module
-// Version: 0.2.1
+// Version: 0.2.2
+// ===========================================
+
+// ===========================================
+// DOM REFERENCES
 // ===========================================
 
 const taskContainer = document.getElementById("taskContainer");
@@ -10,9 +14,42 @@ const totalTasksElement = document.getElementById("totalTasks");
 const pendingTasksElement = document.getElementById("pendingTasks");
 const completedTasksElement = document.getElementById("completedTasks");
 
-/**
- * Render dashboard statistics
- */
+const toastContainer = document.getElementById("toastContainer");
+
+// ===========================================
+// TOAST NOTIFICATIONS
+// ===========================================
+
+function showToast(message, type = "success") {
+
+    if (!toastContainer) return;
+
+    const toast = document.createElement("div");
+
+    toast.className = `toast ${type}`;
+
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+
+        toast.classList.add("hide");
+
+        toast.addEventListener("animationend", () => {
+
+            toast.remove();
+
+        });
+
+    }, 3000);
+
+}
+
+// ===========================================
+// DASHBOARD
+// ===========================================
+
 function renderStats() {
 
     totalTasksElement.textContent = AppState.stats.total;
@@ -21,13 +58,16 @@ function renderStats() {
 
 }
 
-/**
- * Convert date into a human-readable format.
- */
+// ===========================================
+// DATE HELPERS
+// ===========================================
+
 function formatDueDate(dateString) {
 
     if (!dateString) {
+
         return "No Due Date";
+
     }
 
     const today = new Date();
@@ -36,35 +76,32 @@ function formatDueDate(dateString) {
     today.setHours(0, 0, 0, 0);
     dueDate.setHours(0, 0, 0, 0);
 
-    const difference =
-        Math.round(
-            (dueDate - today) /
-            (1000 * 60 * 60 * 24)
-        );
+    const difference = Math.round(
 
-    if (difference === 0) {
-        return "Today";
-    }
+        (dueDate - today) /
 
-    if (difference === 1) {
-        return "Tomorrow";
-    }
+        (1000 * 60 * 60 * 24)
 
-    if (difference === -1) {
-        return "Yesterday";
-    }
+    );
+
+    if (difference === 0) return "Today";
+    if (difference === 1) return "Tomorrow";
+    if (difference === -1) return "Yesterday";
 
     return dueDate.toLocaleDateString(undefined, {
+
         month: "short",
         day: "numeric",
         year: "numeric"
+
     });
 
 }
 
-/**
- * Priority color class
- */
+// ===========================================
+// PRIORITY HELPERS
+// ===========================================
+
 function getPriorityClass(priority) {
 
     switch (priority.toLowerCase()) {
@@ -77,13 +114,11 @@ function getPriorityClass(priority) {
 
         default:
             return "priority-low";
+
     }
 
 }
 
-/**
- * Priority icon
- */
 function getPriorityIcon(priority) {
 
     switch (priority.toLowerCase()) {
@@ -101,9 +136,10 @@ function getPriorityIcon(priority) {
 
 }
 
-/**
- * Create a task card
- */
+// ===========================================
+// TASK CARD
+// ===========================================
+
 function createTaskCard(task) {
 
     const card = document.createElement("div");
@@ -174,9 +210,11 @@ function createTaskCard(task) {
     return card;
 
 }
-/**
- * Render empty state
- */
+
+// ===========================================
+// EMPTY STATE
+// ===========================================
+
 function renderEmptyState() {
 
     taskContainer.innerHTML = `
@@ -199,9 +237,10 @@ function renderEmptyState() {
 
 }
 
-/**
- * Render all tasks
- */
+// ===========================================
+// RENDER TASKS
+// ===========================================
+
 function renderTasks() {
 
     taskContainer.innerHTML = "";
@@ -209,6 +248,7 @@ function renderTasks() {
     if (AppState.tasks.length === 0) {
 
         renderEmptyState();
+
         return;
 
     }
@@ -216,41 +256,62 @@ function renderTasks() {
     AppState.tasks.forEach(task => {
 
         taskContainer.appendChild(
+
             createTaskCard(task)
+
         );
 
     });
 
 }
 
-/**
- * Render complete UI
- */
+// ===========================================
+// MAIN RENDER
+// ===========================================
+
 function renderUI() {
 
     renderStats();
+
     renderTasks();
 
 }
 
-/**
- * Register UI events
- */
+// ===========================================
+// EVENT LISTENERS
+// ===========================================
+
 function initializeUI() {
 
     taskContainer.addEventListener("click", function (event) {
 
         const taskCard = event.target.closest(".task-card");
 
-        if (!taskCard) {
-            return;
-        }
+        if (!taskCard) return;
 
         const taskId = taskCard.dataset.id;
 
+        // Complete / Undo
+
         if (event.target.closest(".complete-btn")) {
 
+            const task = AppState.tasks.find(
+
+                task => task.id === taskId
+
+            );
+
             toggleTaskCompletion(taskId);
+
+            if (task.completed) {
+
+                showToast("✅ Task completed", "success");
+
+            } else {
+
+                showToast("ℹ️ Task marked as pending", "info");
+
+            }
 
             renderUI();
 
@@ -258,11 +319,13 @@ function initializeUI() {
 
         }
 
+        // Delete Confirmation
+
         if (event.target.closest(".delete-btn")) {
 
-            deleteTask(taskId);
+            openDeleteModal(taskId);
 
-            renderUI();
+            return;
 
         }
 

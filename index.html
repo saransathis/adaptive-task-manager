@@ -16,11 +16,17 @@
 
     <div class="container">
 
+        <!-- =========================
+             Header
+        ========================== -->
         <header>
             <h1>Adaptive Task Manager</h1>
             <p>Organize your day, one task at a time.</p>
         </header>
 
+        <!-- =========================
+             Dashboard
+        ========================== -->
         <section class="dashboard">
 
             <div class="card">
@@ -40,6 +46,9 @@
 
         </section>
 
+        <!-- =========================
+             Task Section
+        ========================== -->
         <section class="task-section">
 
             <div class="section-header">
@@ -47,24 +56,35 @@
             </div>
 
             <div id="taskContainer">
+
                 <div class="empty-task">
                     <p>No tasks available.</p>
                 </div>
+
             </div>
 
         </section>
 
     </div>
 
+    <!-- =========================
+         Floating Add Button
+    ========================== -->
     <button class="add-btn" id="openModal">+</button>
 
+    <!-- =========================
+         Add Task Modal
+    ========================== -->
     <div class="modal" id="taskModal">
 
         <div class="modal-content">
 
             <h2>Add New Task</h2>
 
-            <input type="text" id="taskTitle" placeholder="Task Title">
+            <input
+                type="text"
+                id="taskTitle"
+                placeholder="Task Title">
 
             <select id="taskCategory">
                 <option>Work</option>
@@ -79,17 +99,76 @@
                 <option>Low</option>
             </select>
 
-            <input type="date" id="taskDate">
+            <input
+                type="date"
+                id="taskDate">
 
             <div class="modal-buttons">
-                <button class="cancel-btn" id="closeModal">Cancel</button>
-                <button class="save-btn" id="saveTask">Save Task</button>
+
+                <button
+                    class="cancel-btn"
+                    id="closeModal">
+                    Cancel
+                </button>
+
+                <button
+                    class="save-btn"
+                    id="saveTask">
+                    Save Task
+                </button>
+
             </div>
 
         </div>
 
     </div>
 
+    <!-- =========================
+         Delete Confirmation Modal
+    ========================== -->
+    <div class="modal" id="deleteModal">
+
+        <div class="modal-content delete-modal">
+
+            <h2>Delete Task</h2>
+
+            <p class="delete-message">
+                Are you sure you want to delete
+                <strong id="deleteTaskTitle">this task</strong>?
+            </p>
+
+            <p class="delete-warning">
+                This action cannot be undone.
+            </p>
+
+            <div class="modal-buttons">
+
+                <button
+                    class="cancel-btn"
+                    id="cancelDelete">
+                    Cancel
+                </button>
+
+                <button
+                    class="delete-confirm-btn"
+                    id="confirmDelete">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         Toast Notifications
+    ========================== -->
+    <div id="toastContainer"></div>
+
+    <!-- =========================
+         JavaScript Files
+    ========================== -->
     <script src="js/state.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/tasks.js"></script>

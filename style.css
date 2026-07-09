@@ -776,3 +776,229 @@ button{
     }
 
 }
+/*==========================================================
+    TOAST NOTIFICATIONS
+==========================================================*/
+
+#toastContainer{
+
+    position:fixed;
+
+    top:24px;
+
+    right:24px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+    z-index:9999;
+
+    pointer-events:none;
+
+}
+
+.toast{
+
+    min-width:300px;
+
+    max-width:380px;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    color:#fff;
+
+    font-size:.92rem;
+
+    font-weight:500;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    box-shadow:0 16px 40px rgba(0,0,0,.18);
+
+    animation:toastSlideIn .35s ease;
+
+    pointer-events:auto;
+
+}
+
+.toast.success{
+
+    background:#16a34a;
+
+}
+
+.toast.error{
+
+    background:#dc2626;
+
+}
+
+.toast.info{
+
+    background:#2563eb;
+
+}
+
+.toast.hide{
+
+    animation:toastSlideOut .35s forwards;
+
+}
+
+@keyframes toastSlideIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(120%);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}
+
+@keyframes toastSlideOut{
+
+    from{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        opacity:0;
+
+        transform:translateX(120%);
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    #toastContainer{
+
+        left:15px;
+
+        right:15px;
+
+        top:15px;
+
+    }
+
+    .toast{
+
+        min-width:auto;
+
+        width:100%;
+
+    }
+
+}
+/*==========================================================
+    DELETE CONFIRMATION MODAL
+==========================================================*/
+
+.delete-modal{
+
+    max-width:460px;
+
+    text-align:center;
+
+}
+
+.delete-modal h2{
+
+    color:var(--danger);
+
+    margin-bottom:18px;
+
+}
+
+.delete-message{
+
+    font-size:1rem;
+
+    color:var(--text);
+
+    line-height:1.7;
+
+    margin-bottom:10px;
+
+}
+
+.delete-message strong{
+
+    color:var(--danger);
+
+    font-weight:600;
+
+    word-break:break-word;
+
+}
+
+.delete-warning{
+
+    color:var(--text-light);
+
+    font-size:.9rem;
+
+    margin-bottom:28px;
+
+}
+
+.delete-confirm-btn{
+
+    border:none;
+
+    border-radius:var(--radius-md);
+
+    padding:12px 22px;
+
+    background:var(--danger);
+
+    color:#fff;
+
+    font-size:.95rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.delete-confirm-btn:hover{
+
+    background:#dc2626;
+
+    transform:translateY(-2px);
+
+}
+
+.delete-confirm-btn:active{
+
+    transform:scale(.98);
+
+}
