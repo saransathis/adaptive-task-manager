@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive Task Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Adaptive Task Manager</h1>
+            <p>Organize your day, one task at a time.</p>
+        </header>
+
+        <section class="dashboard">
+
+            <div class="card">
+                <h3>Total Tasks</h3>
+                <h2 id="totalTasks">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Pending Tasks</h3>
+                <h2 id="pendingTasks">0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Completed Tasks</h3>
+                <h2 id="completedTasks">0</h2>
+            </div>
+
+        </section>
+
+        <section class="task-section">
+
+            <div class="section-header">
+                <h2>Today's Tasks</h2>
+            </div>
+
+            <div id="taskContainer">
+                <div class="empty-task">
+                    <p>No tasks available.</p>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <button class="add-btn" id="openModal">+</button>
+
+    <div class="modal" id="taskModal">
+
+        <div class="modal-content">
+
+            <h2>Add New Task</h2>
+
+            <input type="text" id="taskTitle" placeholder="Task Title">
+
+            <select id="taskCategory">
+                <option>Work</option>
+                <option>Personal</option>
+                <option>Study</option>
+                <option>Health</option>
+            </select>
+
+            <select id="taskPriority">
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+            </select>
+
+            <input type="date" id="taskDate">
+
+            <div class="modal-buttons">
+                <button class="cancel-btn" id="closeModal">Cancel</button>
+                <button class="save-btn" id="saveTask">Save Task</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/state.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
