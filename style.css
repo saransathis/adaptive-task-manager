@@ -264,9 +264,9 @@ header p{
 
     padding:14px 18px;
 
-    background:red !important;
+    background:var(--surface-light);
 
-    border:5px solid blue !important;
+    border:1px solid var(--border);
 
     border-radius:var(--radius-lg);
 
