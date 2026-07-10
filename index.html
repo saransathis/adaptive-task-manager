@@ -201,6 +201,101 @@
     </div>
 
     <!-- =========================
+     Complete Confirmation Modal
+========================== -->
+<div class="modal" id="completeModal">
+
+    <div class="modal-content delete-modal">
+
+        <h2 style="color: var(--success);">
+            Complete Task
+        </h2>
+
+        <p class="delete-message">
+            Are you sure you want to mark
+            <strong id="completeTaskTitle">this task</strong>
+            as completed?
+        </p>
+
+        <p class="delete-warning">
+            You can undo this action later.
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                class="cancel-btn"
+                id="cancelComplete">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="save-btn"
+                id="confirmComplete">
+
+                Complete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- =========================
+     Finish Today Modal
+========================== -->
+<div class="modal" id="finishTodayModal">
+
+    <div class="modal-content delete-modal">
+
+        <h2 style="color:var(--primary);">
+            Finish Today
+        </h2>
+
+        <p class="delete-message">
+
+            You've completed all today's tasks.
+
+            <br><br>
+
+            Finish today and prepare for tomorrow?
+
+        </p>
+
+        <p class="delete-warning">
+
+            This will clear today's tasks.
+
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                class="cancel-btn"
+                id="cancelFinish">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="save-btn"
+                id="confirmFinish">
+
+                Finish
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- =========================
          Toast Notifications
     ========================== -->
     <div id="toastContainer"></div>

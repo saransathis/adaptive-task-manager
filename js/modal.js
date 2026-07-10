@@ -1,7 +1,7 @@
 // ===========================================
 // Adaptive Task Manager
 // Modal Module
-// Version: v0.2.2
+// Version: v0.4.2.2
 // ===========================================
 
 // ===========================================
@@ -29,8 +29,28 @@ const deleteTaskTitle = document.getElementById("deleteTaskTitle");
 const cancelDeleteButton = document.getElementById("cancelDelete");
 const confirmDeleteButton = document.getElementById("confirmDelete");
 
-// Stores task id waiting for confirmation
 let pendingDeleteTaskId = null;
+
+// ===========================================
+// COMPLETE CONFIRMATION MODAL
+// ===========================================
+
+const completeModal = document.getElementById("completeModal");
+const completeTaskTitle = document.getElementById("completeTaskTitle");
+
+const cancelCompleteButton = document.getElementById("cancelComplete");
+const confirmCompleteButton = document.getElementById("confirmComplete");
+
+let pendingCompleteTaskId = null;
+
+// ===========================================
+// FINISH TODAY MODAL
+// ===========================================
+
+const finishTodayModal = document.getElementById("finishTodayModal");
+
+const cancelFinishButton = document.getElementById("cancelFinish");
+const confirmFinishButton = document.getElementById("confirmFinish");
 
 // ===========================================
 // OPEN ADD TASK MODAL
@@ -67,14 +87,10 @@ function resetTaskForm() {
     taskPriorityInput.selectedIndex = 0;
     taskDateInput.value = "";
 
-    // Exit Edit Mode
     AppState.editingTaskId = null;
 
-    // Restore modal title
-    const taskModalTitle = document.getElementById("taskModalTitle");
-    taskModalTitle.textContent = "Add New Task";
+    document.getElementById("taskModalTitle").textContent = "Add New Task";
 
-    // Restore button text
     saveTaskButton.textContent = "Save Task";
 
 }
@@ -106,10 +122,6 @@ function handleSaveTask() {
 
     };
 
-    // ===============================
-    // EDIT TASK
-    // ===============================
-
     if (AppState.editingTaskId) {
 
         updateTask(AppState.editingTaskId, taskData);
@@ -118,13 +130,7 @@ function handleSaveTask() {
 
         showToast("✅ Task updated successfully", "success");
 
-    }
-
-    // ===============================
-    // ADD TASK
-    // ===============================
-
-    else {
+    } else {
 
         addTask(taskData);
 
@@ -179,12 +185,87 @@ function confirmDeleteTask() {
 }
 
 // ===========================================
+// COMPLETE CONFIRMATION
+// ===========================================
+
+function openCompleteModal(taskId) {
+
+    const task = AppState.tasks.find(task => task.id === taskId);
+
+    if (!task) return;
+
+    pendingCompleteTaskId = taskId;
+
+    completeTaskTitle.textContent = `"${task.title}"`;
+
+    completeModal.classList.add("show");
+
+}
+
+function closeCompleteModal() {
+
+    pendingCompleteTaskId = null;
+
+    completeModal.classList.remove("show");
+
+}
+
+function confirmCompleteTask() {
+
+    if (!pendingCompleteTaskId) return;
+
+    toggleTaskCompletion(pendingCompleteTaskId);
+
+    renderUI();
+
+    showToast("✅ Task completed", "success");
+
+    closeCompleteModal();
+
+}
+
+// ===========================================
+// FINISH TODAY
+// ===========================================
+
+function openFinishTodayModal() {
+
+    finishTodayModal.classList.add("show");
+
+}
+
+function closeFinishTodayModal() {
+
+    finishTodayModal.classList.remove("show");
+
+}
+
+function confirmFinishToday() {
+
+    AppState.tasks = [];
+
+    updateStats();
+
+    saveTasks(AppState.tasks);
+
+    renderUI();
+
+    showToast(
+        "🌅 Great work! Ready for tomorrow.",
+        "success"
+    );
+
+    closeFinishTodayModal();
+
+}
+
+// ===========================================
 // INITIALIZE MODAL
 // ===========================================
 
 function initializeModal() {
 
-    // Add Task Modal
+    // Add Task
 
     openModalButton.addEventListener("click", openTaskModal);
 
@@ -192,53 +273,57 @@ function initializeModal() {
 
     saveTaskButton.addEventListener("click", handleSaveTask);
 
-    // Delete Confirmation Modal
+    // Delete
 
     cancelDeleteButton.addEventListener("click", closeDeleteModal);
 
     confirmDeleteButton.addEventListener("click", confirmDeleteTask);
 
-    // Close when clicking outside modal
+    // Complete
+
+    cancelCompleteButton.addEventListener("click", closeCompleteModal);
+
+    confirmCompleteButton.addEventListener("click", confirmCompleteTask);
+
+    // Finish Today
+
+    cancelFinishButton.addEventListener("click", closeFinishTodayModal);
+
+    confirmFinishButton.addEventListener("click", confirmFinishToday);
+
+    // Outside Click
 
     window.addEventListener("click", function (event) {
 
-        if (event.target === modal) {
+        if (event.target === modal) closeTaskModal();
 
-            closeTaskModal();
+        if (event.target === deleteModal) closeDeleteModal();
 
-        }
+        if (event.target === completeModal) closeCompleteModal();
 
-        if (event.target === deleteModal) {
-
-            closeDeleteModal();
-
-        }
+        if (event.target === finishTodayModal) closeFinishTodayModal();
 
     });
 
-    // Keyboard Shortcuts
+    // Keyboard
 
     document.addEventListener("keydown", function (event) {
 
-        // ESC → Close Modals
-
         if (event.key === "Escape") {
 
-            if (modal.classList.contains("show")) {
-
+            if (modal.classList.contains("show"))
                 closeTaskModal();
 
-            }
-
-            if (deleteModal.classList.contains("show")) {
-
+            if (deleteModal.classList.contains("show"))
                 closeDeleteModal();
 
-            }
+            if (completeModal.classList.contains("show"))
+                closeCompleteModal();
+
+            if (finishTodayModal.classList.contains("show"))
+                closeFinishTodayModal();
 
         }
-
-        // ENTER → Save Task
 
         if (
             event.key === "Enter" &&

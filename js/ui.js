@@ -253,22 +253,39 @@ function openEditTask(taskId) {
 // ===========================================
 // EMPTY STATE
 // ===========================================
+function renderEmptyState(type = "empty") {
 
-function renderEmptyState() {
+    let icon = "📝";
+    let title = "No Tasks Yet";
+    let message = "Click the + button to create your first task.";
+
+    if (type === "search") {
+
+        icon = "🔍";
+        title = "No Matching Tasks";
+        message = "Try a different keyword.";
+
+    }
+
+    if (type === "completed") {
+
+        icon = "🎉";
+        title = "All Tasks Completed";
+        message = "Amazing! You've completed every task.";
+
+    }
 
     taskContainer.innerHTML = `
 
         <div class="empty-task">
 
             <div style="font-size:3rem;">
-                📝
+                ${icon}
             </div>
 
-            <h3>No Tasks Yet</h3>
+            <h3>${title}</h3>
 
-            <p>
-                Click the + button to create your first task.
-            </p>
+            <p>${message}</p>
 
         </div>
 
@@ -283,32 +300,69 @@ function renderTasks() {
 
     taskContainer.innerHTML = "";
 
-    let tasksToRender = AppState.tasks;
+    const allTasks = AppState.tasks;
 
-    // Use filtered tasks if Task Manager module is available
+    let tasksToRender = allTasks;
+
     if (typeof getFilteredTasks === "function") {
 
         tasksToRender = getFilteredTasks();
 
     }
 
-    if (tasksToRender.length === 0) {
+    // No tasks created
+    if (allTasks.length === 0) {
 
-        renderEmptyState();
+        renderEmptyState("empty");
 
         return;
 
     }
 
+    // Search returned nothing
+    if (tasksToRender.length === 0) {
+
+        renderEmptyState("search");
+
+        return;
+
+    }
+
+    // Render ALL tasks (pending + completed)
+
     tasksToRender.forEach(task => {
 
         taskContainer.appendChild(
-
             createTaskCard(task)
-
         );
 
     });
+
+    // Show Finish Today button
+    if (
+        AppState.stats.total > 0 &&
+        AppState.stats.pending === 0
+    ) {
+
+        const finishButton = document.createElement("button");
+
+        finishButton.id = "finishTodayBtn";
+
+        finishButton.className = "save-btn";
+
+        finishButton.style.marginTop = "20px";
+        finishButton.style.width = "100%";
+
+        finishButton.textContent = "🏁 Finish Today";
+
+        finishButton.addEventListener(
+            "click",
+            openFinishTodayModal
+        );
+
+        taskContainer.appendChild(finishButton);
+
+    }
 
 }
 
@@ -353,29 +407,33 @@ function initializeUI() {
 
         if (event.target.closest(".complete-btn")) {
 
-            const task = AppState.tasks.find(
+    const task = AppState.tasks.find(
+        task => task.id === taskId
+    );
 
-                task => task.id === taskId
+    if (!task) return;
 
-            );
+    // If already completed, allow instant undo
+    if (task.completed) {
 
-            toggleTaskCompletion(taskId);
+        toggleTaskCompletion(taskId);
 
-            if (task.completed) {
+        renderUI();
 
-                showToast("✅ Task completed", "success");
+        showToast("ℹ️ Task marked as pending", "info");
 
-            } else {
+    }
 
-                showToast("ℹ️ Task marked as pending", "info");
+    // Otherwise ask for confirmation
+    else {
 
-            }
+        openCompleteModal(taskId);
 
-            renderUI();
+    }
 
-            return;
+    return;
 
-        }
+}
         // Edit Task
 
 if (event.target.closest(".edit-btn")) {
