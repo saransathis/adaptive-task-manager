@@ -19,6 +19,7 @@ const toastContainer = document.getElementById("toastContainer");
 const taskModal = document.getElementById("taskModal");
 
 const taskModalTitle = document.getElementById("taskModalTitle");
+const themeToggleButton = document.getElementById("themeToggle");
 
 
 
@@ -328,6 +329,17 @@ function renderUI() {
 // ===========================================
 
 function initializeUI() {
+    if (themeToggleButton) {
+
+    themeToggleButton.addEventListener(
+
+        "click",
+
+        toggleTheme
+
+    );
+
+}
 
     taskContainer.addEventListener("click", function (event) {
 
@@ -385,5 +397,55 @@ if (event.target.closest(".edit-btn")) {
         }
 
     });
+
+}
+// ===========================================
+// THEME MANAGEMENT
+// ===========================================
+
+function loadTheme() {
+
+    const savedTheme = localStorage.getItem("theme") || "light";
+
+    document.body.classList.toggle(
+        "dark-theme",
+        savedTheme === "dark"
+    );
+
+    updateThemeButton();
+
+}
+
+function saveTheme(theme) {
+
+    localStorage.setItem("theme", theme);
+
+}
+
+function updateThemeButton() {
+
+    if (!themeToggleButton) return;
+
+    const isDark = document.body.classList.contains("dark-theme");
+
+    themeToggleButton.textContent = isDark ? "☀️" : "🌙";
+
+    themeToggleButton.title = isDark
+        ? "Switch to Light Mode"
+        : "Switch to Dark Mode";
+
+}
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark-theme");
+
+    const currentTheme = document.body.classList.contains("dark-theme")
+        ? "dark"
+        : "light";
+
+    saveTheme(currentTheme);
+
+    updateThemeButton();
 
 }

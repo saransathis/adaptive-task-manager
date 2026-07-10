@@ -87,6 +87,10 @@ body{
 
     line-height:1.5;
 
+    transition:
+        background-color .35s ease,
+        color .35s ease;
+
 }
 
 /*==========================
@@ -130,6 +134,62 @@ header p{
     color:var(--text-light);
 
     font-size:.95rem;
+
+}
+
+/*==========================
+  HEADER LAYOUT
+==========================*/
+
+.header-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+/*==========================
+  THEME TOGGLE BUTTON
+==========================*/
+
+.theme-toggle{
+
+    width:52px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    font-size:1.3rem;
+
+    cursor:pointer;
+
+    box-shadow:var(--shadow-sm);
+
+    border:1px solid var(--border);
+
+    transition:all .3s ease;
+
+}
+
+.theme-toggle:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--shadow-md);
+
+    border-color:var(--primary);
 
 }
 
@@ -466,6 +526,22 @@ button{
         bottom:20px;
 
         right:20px;
+
+    }
+
+    .header-content{
+
+        align-items:flex-start;
+
+    }
+
+    .theme-toggle{
+
+        width:46px;
+
+        height:46px;
+
+        font-size:1.15rem;
 
     }
 
@@ -1090,5 +1166,87 @@ button{
 .delete-confirm-btn:active{
 
     transform:scale(.98);
+
+}
+
+/*==========================================================
+    DARK MODE
+==========================================================*/
+
+body.dark-theme{
+
+    --background:#0f172a;
+
+    --surface:#1e293b;
+
+    --surface-light:#334155;
+
+    --text:#f8fafc;
+
+    --text-light:#cbd5e1;
+
+    --border:#475569;
+
+    --shadow-sm:
+        0 2px 8px rgba(0,0,0,.35);
+
+    --shadow-md:
+        0 10px 30px rgba(0,0,0,.45);
+
+    --shadow-lg:
+        0 20px 50px rgba(0,0,0,.55);
+
+}
+
+/* Improve form controls */
+
+body.dark-theme .modal-content input,
+body.dark-theme .modal-content select{
+
+    background:var(--surface-light);
+
+    color:var(--text);
+
+    border-color:var(--border);
+
+}
+
+/* Search */
+
+body.dark-theme .search-box{
+
+    background:var(--surface-light);
+
+}
+
+body.dark-theme .search-box:focus-within{
+
+    background:var(--surface);
+
+}
+
+/* Secondary buttons */
+
+body.dark-theme .cancel-btn{
+
+    background:var(--surface-light);
+
+    color:var(--text);
+
+}
+
+body.dark-theme .task-actions button{
+
+    background:var(--surface-light);
+
+    color:var(--text);
+
+}
+
+/* Badge readability */
+
+body.dark-theme .badge{
+
+    border:1px solid rgba(255,255,255,.08);
 
 }

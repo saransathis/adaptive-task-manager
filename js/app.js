@@ -1,7 +1,7 @@
 // ===========================================
 // Adaptive Task Manager
 // Application Entry Point
-// Version: 0.2.0
+// Version: 0.4.1
 // ===========================================
 
 /**
@@ -12,6 +12,9 @@ function initializeApp() {
     // Load tasks from Local Storage
     initializeTasks();
 
+    // Load saved theme
+    loadTheme();
+
     // Register UI event listeners
     initializeUI();
 
@@ -20,6 +23,7 @@ function initializeApp() {
 
     // Render the application
     renderUI();
+
 }
 
 // Start the application
