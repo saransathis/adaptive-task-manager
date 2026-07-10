@@ -1,7 +1,7 @@
 // ===========================================
 // Adaptive Task Manager
 // State Management
-// Version: 0.2.0
+// Version: v0.3.1
 // ===========================================
 
 const AppState = {
@@ -17,5 +17,11 @@ const AppState = {
         total: 0,
         pending: 0,
         completed: 0
-    }
+    },
+
+    // ===========================================
+    // Edit Task State
+    // ===========================================
+
+    editingTaskId: null
 };

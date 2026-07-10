@@ -67,6 +67,16 @@ function resetTaskForm() {
     taskPriorityInput.selectedIndex = 0;
     taskDateInput.value = "";
 
+    // Exit Edit Mode
+    AppState.editingTaskId = null;
+
+    // Restore modal title
+    const taskModalTitle = document.getElementById("taskModalTitle");
+    taskModalTitle.textContent = "Add New Task";
+
+    // Restore button text
+    saveTaskButton.textContent = "Save Task";
+
 }
 
 // ===========================================
@@ -87,18 +97,42 @@ function handleSaveTask() {
 
     }
 
-    addTask({
+    const taskData = {
 
         title: title,
         category: taskCategoryInput.value,
         priority: taskPriorityInput.value,
         dueDate: taskDateInput.value
 
-    });
+    };
 
-    renderUI();
+    // ===============================
+    // EDIT TASK
+    // ===============================
 
-    showToast("✅ Task added successfully", "success");
+    if (AppState.editingTaskId) {
+
+        updateTask(AppState.editingTaskId, taskData);
+
+        renderUI();
+
+        showToast("✅ Task updated successfully", "success");
+
+    }
+
+    // ===============================
+    // ADD TASK
+    // ===============================
+
+    else {
+
+        addTask(taskData);
+
+        renderUI();
+
+        showToast("✅ Task added successfully", "success");
+
+    }
 
     closeTaskModal();
 

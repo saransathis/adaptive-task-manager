@@ -1,7 +1,7 @@
 // ===========================================
 // Adaptive Task Manager
 // Task Management Module
-// Version: 0.2.0
+// Version: v0.3.1
 // ===========================================
 
 /**
@@ -31,6 +31,7 @@ function updateStats() {
  * @param {Object} taskData
  */
 function addTask(taskData) {
+
     const newTask = {
         id: generateTaskId(),
         title: taskData.title,
@@ -45,6 +46,30 @@ function addTask(taskData) {
 
     updateStats();
     saveTasks(AppState.tasks);
+
+}
+
+/**
+ * Update an existing task
+ * @param {string} taskId
+ * @param {Object} taskData
+ */
+function updateTask(taskId, taskData) {
+
+    const task = AppState.tasks.find(
+        task => task.id === taskId
+    );
+
+    if (!task) return;
+
+    task.title = taskData.title;
+    task.category = taskData.category;
+    task.priority = taskData.priority;
+    task.dueDate = taskData.dueDate;
+
+    updateStats();
+    saveTasks(AppState.tasks);
+
 }
 
 /**
@@ -52,12 +77,14 @@ function addTask(taskData) {
  * @param {string} taskId
  */
 function deleteTask(taskId) {
+
     AppState.tasks = AppState.tasks.filter(
         task => task.id !== taskId
     );
 
     updateStats();
     saveTasks(AppState.tasks);
+
 }
 
 /**
@@ -65,6 +92,7 @@ function deleteTask(taskId) {
  * @param {string} taskId
  */
 function toggleTaskCompletion(taskId) {
+
     const task = AppState.tasks.find(
         task => task.id === taskId
     );
@@ -75,12 +103,16 @@ function toggleTaskCompletion(taskId) {
 
     updateStats();
     saveTasks(AppState.tasks);
+
 }
 
 /**
  * Load tasks from Local Storage
  */
 function initializeTasks() {
+
     AppState.tasks = loadTasks();
+
     updateStats();
+
 }

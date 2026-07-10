@@ -16,6 +16,13 @@ const completedTasksElement = document.getElementById("completedTasks");
 
 const toastContainer = document.getElementById("toastContainer");
 
+const taskModal = document.getElementById("taskModal");
+
+const taskModalTitle = document.getElementById("taskModalTitle");
+
+
+
+
 // ===========================================
 // TOAST NOTIFICATIONS
 // ===========================================
@@ -187,27 +194,58 @@ function createTaskCard(task) {
 
         <div class="task-actions">
 
-            <button
-                class="complete-btn"
-                title="${task.completed ? "Undo Task" : "Complete Task"}">
+    <button
+        class="complete-btn"
+        title="${task.completed ? "Undo Task" : "Complete Task"}">
 
-                ${task.completed ? "↺" : "✓"}
+        ${task.completed ? "↺" : "✓"}
 
-            </button>
+    </button>
 
-            <button
-                class="delete-btn"
-                title="Delete Task">
+    <button
+        class="edit-btn"
+        title="Edit Task">
 
-                🗑
+        ✏️
 
-            </button>
+    </button>
 
-        </div>
+    <button
+        class="delete-btn"
+        title="Delete Task">
+
+        🗑
+
+    </button>
+
+</div>
 
     `;
 
     return card;
+
+}
+// ===========================================
+// OPEN EDIT TASK MODAL
+// ===========================================
+
+function openEditTask(taskId) {
+
+    const task = AppState.tasks.find(task => task.id === taskId);
+
+    if (!task) return;
+
+    AppState.editingTaskId = taskId;
+
+    taskTitleInput.value = task.title;
+    taskCategoryInput.value = task.category;
+    taskPriorityInput.value = task.priority;
+    taskDateInput.value = task.dueDate;
+
+    taskModalTitle.textContent = "Edit Task";
+    saveTaskButton.textContent = "Save Changes";
+
+    taskModal.classList.add("show");
 
 }
 
@@ -326,6 +364,15 @@ function initializeUI() {
             return;
 
         }
+        // Edit Task
+
+if (event.target.closest(".edit-btn")) {
+
+    openEditTask(taskId);
+
+    return;
+
+}
 
         // Delete Confirmation
 
