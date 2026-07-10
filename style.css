@@ -241,6 +241,96 @@ header p{
 }
 
 /*==========================
+  SEARCH BAR
+==========================*/
+
+.search-container{
+
+    width:100%;
+
+    margin-bottom:24px;
+
+}
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    width:100%;
+
+    padding:14px 18px;
+
+    background:var(--surface-light);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-lg);
+
+    box-shadow:var(--shadow-sm);
+
+    transition:var(--transition);
+
+}
+
+.search-box:hover{
+
+    border-color:#cbd5e1;
+
+    box-shadow:var(--shadow-md);
+
+}
+
+.search-box:focus-within{
+
+    background:#ffffff;
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+.search-icon{
+
+    font-size:1.1rem;
+
+    color:var(--text-light);
+
+    user-select:none;
+
+    flex-shrink:0;
+
+}
+
+.search-box input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:.95rem;
+
+    font-family:inherit;
+
+}
+
+.search-box input::placeholder{
+
+    color:var(--text-light);
+
+}
+
+/*==========================
   TASK CONTAINER
 ==========================*/
 

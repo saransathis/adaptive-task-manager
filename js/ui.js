@@ -240,12 +240,20 @@ function renderEmptyState() {
 // ===========================================
 // RENDER TASKS
 // ===========================================
-
 function renderTasks() {
 
     taskContainer.innerHTML = "";
 
-    if (AppState.tasks.length === 0) {
+    let tasksToRender = AppState.tasks;
+
+    // Use filtered tasks if Task Manager module is available
+    if (typeof getFilteredTasks === "function") {
+
+        tasksToRender = getFilteredTasks();
+
+    }
+
+    if (tasksToRender.length === 0) {
 
         renderEmptyState();
 
@@ -253,7 +261,7 @@ function renderTasks() {
 
     }
 
-    AppState.tasks.forEach(task => {
+    tasksToRender.forEach(task => {
 
         taskContainer.appendChild(
 
