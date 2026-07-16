@@ -2,23 +2,60 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>Adaptive Task Manager</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+
 </head>
 
 <body>
+
+    <!-- =====================================
+         Splash Screen (v0.4.2.3)
+    ====================================== -->
+
+    <div id="splash-screen">
+
+        <div class="splash-content">
+
+            <img
+                src="assets/logo.png"
+                alt="Adaptive Task Manager Logo"
+                class="splash-logo">
+
+            <h1>Adaptive Task Manager</h1>
+
+            <p>
+                Organize • Focus • Achieve
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================
+         Main Application
+    ====================================== -->
 
     <div class="container">
 
         <!-- =========================
              Header
         ========================== -->
+
         <header class="app-header">
 
             <div class="header-content">
@@ -26,14 +63,21 @@
                 <div>
 
                     <h1>Adaptive Task Manager</h1>
-                    <p>Organize your day, one task at a time.</p>
+
+                    <p>
+                        Organize your day, one task at a time.
+                    </p>
 
                 </div>
 
                 <button
+
                     id="themeToggle"
+
                     class="theme-toggle"
+
                     title="Toggle Dark Mode"
+
                     aria-label="Toggle Dark Mode">
 
                     🌙
@@ -47,37 +91,51 @@
         <!-- =========================
              Dashboard
         ========================== -->
+
         <section class="dashboard">
 
             <div class="card">
+
                 <h3>Total Tasks</h3>
+
                 <h2 id="totalTasks">0</h2>
+
             </div>
 
             <div class="card">
+
                 <h3>Pending Tasks</h3>
+
                 <h2 id="pendingTasks">0</h2>
+
             </div>
 
             <div class="card">
+
                 <h3>Completed Tasks</h3>
+
                 <h2 id="completedTasks">0</h2>
+
             </div>
 
         </section>
 
-        <!-- =========================
+                <!-- =========================
              Task Section
         ========================== -->
+
         <section class="task-section">
 
             <div class="section-header">
+
                 <h2>Today's Tasks</h2>
+
             </div>
 
             <!-- =========================
                  Live Search
             ========================== -->
+
             <div class="search-container">
 
                 <div class="search-box">
@@ -97,7 +155,9 @@
             <div id="taskContainer">
 
                 <div class="empty-task">
+
                     <p>No tasks available.</p>
+
                 </div>
 
             </div>
@@ -109,16 +169,28 @@
     <!-- =========================
          Floating Add Button
     ========================== -->
-    <button class="add-btn" id="openModal">+</button>
+
+    <button
+        class="add-btn"
+        id="openModal">
+
+        +
+
+    </button>
 
     <!-- =========================
          Add Task Modal
     ========================== -->
+
     <div class="modal" id="taskModal">
 
         <div class="modal-content">
 
-            <h2 id="taskModalTitle">Add New Task</h2>
+            <h2 id="taskModalTitle">
+
+                Add New Task
+
+            </h2>
 
             <input
                 type="text"
@@ -126,16 +198,20 @@
                 placeholder="Task Title">
 
             <select id="taskCategory">
+
                 <option>Work</option>
                 <option>Personal</option>
                 <option>Study</option>
                 <option>Health</option>
+
             </select>
 
             <select id="taskPriority">
+
                 <option>High</option>
                 <option>Medium</option>
                 <option>Low</option>
+
             </select>
 
             <input
@@ -147,13 +223,17 @@
                 <button
                     class="cancel-btn"
                     id="closeModal">
+
                     Cancel
+
                 </button>
 
                 <button
                     class="save-btn"
                     id="saveTask">
+
                     Save Task
+
                 </button>
 
             </div>
@@ -165,19 +245,33 @@
     <!-- =========================
          Delete Confirmation Modal
     ========================== -->
+
     <div class="modal" id="deleteModal">
 
         <div class="modal-content delete-modal">
 
-            <h2>Delete Task</h2>
+            <h2>
+
+                Delete Task
+
+            </h2>
 
             <p class="delete-message">
+
                 Are you sure you want to delete
-                <strong id="deleteTaskTitle">this task</strong>?
+
+                <strong id="deleteTaskTitle">
+
+                    this task
+
+                </strong>?
+
             </p>
 
             <p class="delete-warning">
+
                 This action cannot be undone.
+
             </p>
 
             <div class="modal-buttons">
@@ -185,13 +279,17 @@
                 <button
                     class="cancel-btn"
                     id="cancelDelete">
+
                     Cancel
+
                 </button>
 
                 <button
                     class="delete-confirm-btn"
                     id="confirmDelete">
+
                     Delete
+
                 </button>
 
             </div>
@@ -201,119 +299,142 @@
     </div>
 
     <!-- =========================
-     Complete Confirmation Modal
-========================== -->
-<div class="modal" id="completeModal">
+         Complete Confirmation Modal
+    ========================== -->
 
-    <div class="modal-content delete-modal">
+    <div class="modal" id="completeModal">
 
-        <h2 style="color: var(--success);">
-            Complete Task
-        </h2>
+        <div class="modal-content delete-modal">
 
-        <p class="delete-message">
-            Are you sure you want to mark
-            <strong id="completeTaskTitle">this task</strong>
-            as completed?
-        </p>
+            <h2 style="color:var(--success);">
 
-        <p class="delete-warning">
-            You can undo this action later.
-        </p>
+                Complete Task
 
-        <div class="modal-buttons">
+            </h2>
 
-            <button
-                class="cancel-btn"
-                id="cancelComplete">
+            <p class="delete-message">
 
-                Cancel
+                Are you sure you want to mark
 
-            </button>
+                <strong id="completeTaskTitle">
 
-            <button
-                class="save-btn"
-                id="confirmComplete">
+                    this task
 
-                Complete
+                </strong>
 
-            </button>
+                as completed?
 
-        </div>
+            </p>
 
-    </div>
+            <p class="delete-warning">
 
-</div>
-<!-- =========================
-     Finish Today Modal
-========================== -->
-<div class="modal" id="finishTodayModal">
+                You can undo this action later.
 
-    <div class="modal-content delete-modal">
+            </p>
 
-        <h2 style="color:var(--primary);">
-            Finish Today
-        </h2>
+            <div class="modal-buttons">
 
-        <p class="delete-message">
+                <button
+                    class="cancel-btn"
+                    id="cancelComplete">
 
-            You've completed all today's tasks.
+                    Cancel
 
-            <br><br>
+                </button>
 
-            Finish today and prepare for tomorrow?
+                <button
+                    class="save-btn"
+                    id="confirmComplete">
 
-        </p>
+                    Complete
 
-        <p class="delete-warning">
+                </button>
 
-            This will clear today's tasks.
-
-        </p>
-
-        <div class="modal-buttons">
-
-            <button
-                class="cancel-btn"
-                id="cancelFinish">
-
-                Cancel
-
-            </button>
-
-            <button
-                class="save-btn"
-                id="confirmFinish">
-
-                Finish
-
-            </button>
+            </div>
 
         </div>
 
     </div>
-
-</div>
 
     <!-- =========================
+         Finish Today Modal
+    ========================== -->
+
+    <div class="modal" id="finishTodayModal">
+
+        <div class="modal-content delete-modal">
+
+            <h2 style="color:var(--primary);">
+
+                Finish Today
+
+            </h2>
+
+            <p class="delete-message">
+
+                You've completed all today's tasks.
+
+                <br><br>
+
+                Finish today and prepare for tomorrow?
+
+            </p>
+
+            <p class="delete-warning">
+
+                This will clear today's tasks.
+
+            </p>
+
+            <div class="modal-buttons">
+
+                <button
+                    class="cancel-btn"
+                    id="cancelFinish">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    class="save-btn"
+                    id="confirmFinish">
+
+                    Finish
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+        <!-- =========================
          Toast Notifications
     ========================== -->
+
     <div id="toastContainer"></div>
 
     <!-- =========================
          JavaScript Files
     ========================== -->
+
     <script src="js/state.js"></script>
+
     <script src="js/storage.js"></script>
+
     <script src="js/tasks.js"></script>
+
     <script src="js/ui.js"></script>
 
     <!-- =====================================
-         Task Manager Module (v0.3+)
+         Task Manager Module
     ====================================== -->
+
     <script src="js/taskManager.js"></script>
 
     <script src="js/modal.js"></script>
+
     <script src="js/app.js"></script>
 
 </body>
